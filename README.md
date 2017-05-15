@@ -11,3 +11,19 @@ gcc -Wall test.c framework/configuration.c framework/request.c framework/respons
 
 ./test y y y
 (Note: type n for each y you don't wish to run, ommiting y's will result in discarding test)
+
+
+## building server
+- to build TCP server, run:
+
+gcc -Wall tcpserver.c -o tcpserver
+- to build UDP server, run:
+
+gcc -Wall udpserver.c -o udpserver
+## running server
+- TCP:
+
+./tcpserver
+- UDP:
+
+./udpserver
