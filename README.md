@@ -16,10 +16,10 @@ gcc -Wall test.c framework/configuration.c framework/request.c framework/respons
 ## building server
 - to build TCP server, run:
 
-gcc -Wall tcpserver.c -o tcpserver
+gcc -Wall framework/tcpserver.c -o tcpserver
 - to build UDP server, run:
 
-gcc -Wall udpserver.c -o udpserver
+gcc -Wall framework/udpserver.c -o udpserver
 ## running server
 - TCP:
 
