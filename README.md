@@ -9,4 +9,5 @@ gcc -Wall test.c framework/configuration.c framework/request.c framework/respons
 
 - execute tests by running:
 
-./test y y y (or n for each y you don't wish to run, ommiting y's will result in discarding test)
+./test y y y
+(Note: type n for each y you don't wish to run, ommiting y's will result in discarding test)
