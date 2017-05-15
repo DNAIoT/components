@@ -1,0 +1,5 @@
+#ifndef DNA_QUALITY_OF_SERVICE
+#define  DNA_QUALITY_OF_SERVICE
+
+
+#endif
