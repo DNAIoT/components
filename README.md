@@ -23,7 +23,7 @@ gcc -Wall framework/udpserver.c -o udpserver
 ## running server
 - TCP:
 
-./tcpserver
+./tcpserver [<host> <port>]
 - UDP:
 
-./udpserver
+./udpserver [<host> <port>]
