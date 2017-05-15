@@ -1,7 +1,7 @@
 # components
 DNA framework components.
 
-## compliation example
+## compile example tests
 - make sure you are you have gcc installed on your system,
 - go to the project directory and issue:
 
