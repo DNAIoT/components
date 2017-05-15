@@ -1,4 +1,4 @@
-# components
+# DNA Components
 DNA framework components.
 
 ## compile example tests
