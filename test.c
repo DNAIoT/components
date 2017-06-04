@@ -13,10 +13,16 @@
 void testConfigs() {
     Request *request = malloc(sizeof(Request));
     Response *response = malloc(sizeof(Response));
-    ConfigurationConsumer *config_consumer = malloc(sizeof(ConfigurationConsumer));
-    ConfigurationProducer *config_producer = malloc(sizeof(ConfigurationProducer));
-    ConfigurationServiceAgent *config_serviceAgent = malloc(sizeof(ConfigurationServiceAgent));
-    ConfigurationQualityOfService *config_qualityOfService = malloc(sizeof(ConfigurationQualityOfService));
+    // malloc is not needed, automatic variable works
+//    ConfigurationConsumer *config_consumer = malloc(sizeof(ConfigurationConsumer));
+//    ConfigurationProducer *config_producer = malloc(sizeof(ConfigurationProducer));
+    ConfigurationConsumer *config_consumer = NULL;
+    ConfigurationProducer *config_producer = NULL;
+    // malloc is not needed, automatic variable works
+//    ConfigurationServiceAgent *config_serviceAgent = malloc(sizeof(ConfigurationServiceAgent));
+//    ConfigurationQualityOfService *config_qualityOfService = malloc(sizeof(ConfigurationQualityOfService));
+    ConfigurationServiceAgent *config_serviceAgent = NULL;
+    ConfigurationQualityOfService *config_qualityOfService = NULL;
 
     request_init(request);
     response_init(response);
