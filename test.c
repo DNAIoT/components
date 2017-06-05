@@ -5,24 +5,50 @@
 #include "framework/udpclient.h"
 #include "framework/configuration.h"
 #include "framework/serviceagent.h"
+#include "framework/packet.h"
 #include <stdlib.h>
 #include <stdio.h>
 #include <pthread.h>
 #include <string.h>
+#include <unistd.h>
+
+void testPacket() {
+    Packet *packet = malloc(sizeof(Packet));
+    packet->flags = malloc(sizeof(PacketFlags));
+
+    packet->flags->action = 1;
+    packet->flags->config = 1;
+    packet->flags->flow = 0;
+    packet->flags->init = 0;
+    packet->flags->respond = 0;
+    packet->flags->target = 0;
+    packet->flags->type = 0;
+    packet->flags->window = 0;
+
+    packet->id = 1;
+    packet->data_window_start = 1000;
+    packet->data_window_stop = 1001;
+    packet->request_address = "127.0.0.1";
+    packet->response_address = "127.0.0.1";
+    packet->payload = "Bravo Marko, care! :D";
+
+    int response = packet_verify(packet);
+    sleep(1);
+
+    if (response > 0) {
+        printf("Packet tested successfully (%lu, %lu)\n", sizeof(packet), sizeof(packet->flags));
+    } else {
+        printf("Supplied packet isn't valid DNA format\n");
+    }
+}
 
 void testConfigs() {
     Request *request = malloc(sizeof(Request));
     Response *response = malloc(sizeof(Response));
-    // malloc is not needed, automatic variable works
-//    ConfigurationConsumer *config_consumer = malloc(sizeof(ConfigurationConsumer));
-//    ConfigurationProducer *config_producer = malloc(sizeof(ConfigurationProducer));
-    ConfigurationConsumer *config_consumer = NULL;
-    ConfigurationProducer *config_producer = NULL;
-    // malloc is not needed, automatic variable works
-//    ConfigurationServiceAgent *config_serviceAgent = malloc(sizeof(ConfigurationServiceAgent));
-//    ConfigurationQualityOfService *config_qualityOfService = malloc(sizeof(ConfigurationQualityOfService));
-    ConfigurationServiceAgent *config_serviceAgent = NULL;
-    ConfigurationQualityOfService *config_qualityOfService = NULL;
+    ConfigurationConsumer *config_consumer = malloc(sizeof(ConfigurationConsumer));
+    ConfigurationProducer *config_producer = malloc(sizeof(ConfigurationProducer));
+    ConfigurationServiceAgent *config_serviceAgent = malloc(sizeof(ConfigurationServiceAgent));
+    ConfigurationQualityOfService *config_qualityOfService = malloc(sizeof(ConfigurationQualityOfService));
 
     request_init(request);
     response_init(response);
@@ -63,6 +89,8 @@ void testClients() {
     int thread_count = 6;
     Task *task[thread_count];
     char *testHost[] = {"127.0.0.1", "127.0.0.1", "127.0.0.1", "127.0.0.1", "127.0.0.1", "127.0.0.1"};
+    // first three are TCP clients
+    // second three are UDP clients
     char *testPort[] = {"9879", "9889", "9899", "9979", "9989", "9999"};
     char *message = "Bravo, Marko, care! :D";
 
@@ -120,14 +148,20 @@ void testDevice() {
 int main(int argc, char **argv) {
 
     if (argc > 1 && !strcmp(argv[1], "y")) {
+        printf("Testing creation and initialization of configuration data structure");
         testConfigs();
     }
     if (argc > 2 && !strcmp(argv[2], "y")) {
+        printf("Testing TCP and UDP client creation and threaded execution");
         testClients();
     }
     if (argc > 3 && !strcmp(argv[3], "y")) {
         printf("Testing device configuration (Service Agent target node)\n");
         testDevice();
+    }
+    if (argc > 4 && !strcmp(argv[4], "y")) {
+        printf("Testing verification of DNA Packet\n");
+        testPacket();
     }
 
     if (argc <= 1) {

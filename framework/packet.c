@@ -1,4 +1,7 @@
 #include <netinet/in.h>
+#include <stdlib.h>
+#include <arpa/inet.h>
+#include "time.h"
 #include "packet.h"
 
 #if 0
@@ -23,6 +26,26 @@ struct sockaddr_in  {
  * 4. Check packet data fields for value overflows and allowed ranges
 */
 
+int _packet_verify_flags_flow(PacketFlags *packetFlags);
+int _packet_verify_flags_type(PacketFlags *packetFlags);
+int _packet_verify_flags_target(PacketFlags *packetFlags);
+int _packet_verify_flags_action(PacketFlags *packetFlags);
+int _packet_verify_flags_respond(PacketFlags *packetFlags);
+int _packet_verify_flags_window(PacketFlags *packetFlags);
+int _packet_verify_flags_config(PacketFlags *packetFlags);
+int _packet_verify_flags_init(PacketFlags *packetFlags);
+
+
+char *pack(Packet *packet) {
+    char *packed = NULL;
+    return packed = NULL;
+}
+
+Packet *unpack(char *packed) {
+    Packet *packet = NULL;
+    return packet;
+}
+
 int packet_verify(Packet *packet) {
     int result = 1;
     result *= packet_verify_id(packet);
@@ -30,16 +53,16 @@ int packet_verify(Packet *packet) {
     result *= packet_verify_request_address(packet);
     result *= packet_verify_response_address(packet);
     if (packet->data_window_start) {
-        result *= packet_verify_data_window_start(packet);
+        result *= packet_verify_data_window_start(packet, (unsigned long)time(NULL));
     }
     if (packet->data_window_stop) {
-        result *= packet_verify_data_window_stop(packet);
+        result *= packet_verify_data_window_stop(packet, (unsigned long)time(NULL));
     }
     return result;
 }
 
 int packet_verify_id(Packet *packet) {
-    if (! (0 < packet->id < 65536)) {
+    if (! (0 < packet->id && packet->id < 65536)) {
         // value out of range, error
         return 0;
     }
@@ -60,14 +83,14 @@ int packet_verify_flags(Packet *packet) {
 }
 
 int packet_verify_request_address(Packet *packet) {
-    struct sockaddr_in *placeholder;
-    int result = inet_pton(AF_INET, packet->request_address, *(placeholder.sin_addr));
+    struct sockaddr_in *placeholder = NULL;
+    int result = inet_pton(AF_INET, packet->request_address, (void *) &placeholder);
     return 0 != result;
 }
 
 int packet_verify_response_address(Packet *packet) {
-    struct sockaddr_in *placeholder;
-    int test = inet_pton(AF_INET, packet->response_address, *(placeholder.sin_addr));
+    struct sockaddr_in *placeholder = NULL;
+    int test = inet_pton(AF_INET, packet->response_address, (void *) &placeholder);
     return 0 != test;
 }
 
@@ -77,6 +100,10 @@ int packet_verify_data_window_start(Packet *packet, int now) {
 
 int packet_verify_data_window_stop(Packet *packet, int now) {
     return packet->data_window_stop < now ? 1 : 0;
+}
+
+int packet_verify_data_window_causal(Packet *packet) {
+    return packet->data_window_start <= packet->data_window_stop ? 1 : 0;
 }
 
 int _packet_verify_flags_flow(PacketFlags *packetFlags) {

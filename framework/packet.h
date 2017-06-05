@@ -1,4 +1,7 @@
 
+typedef struct Packet Packet;
+typedef struct PacketFlags PacketFlags;
+
 // 4 bytes structure
 // packed to 2 bytes of flags for sending
 struct PacketFlags {
@@ -45,3 +48,14 @@ struct Packet {
     unsigned int data_window_stop;
     char *payload;
 };
+
+char *pack(Packet *packet);
+Packet *unpack(char *packed);
+int packet_verify(Packet *packet);
+int packet_verify_id(Packet *packet);
+int packet_verify_flags(Packet *packet);
+int packet_verify_request_address(Packet *packet);
+int packet_verify_response_address(Packet *packet);
+int packet_verify_data_window_start(Packet *packet, int now);
+int packet_verify_data_window_stop(Packet *packet, int now);
+int packet_verify_data_window_causal(Packet *packet);
