@@ -35,14 +35,25 @@ int _packet_verify_flags_window(PacketFlags *packetFlags);
 int _packet_verify_flags_config(PacketFlags *packetFlags);
 int _packet_verify_flags_init(PacketFlags *packetFlags);
 
-
-char *pack(Packet *packet) {
+char *pack_json(Packet *packet) {
     char *packed = NULL;
-    return packed = NULL;
+    return packed;
 }
 
-Packet *unpack(char *packed) {
-    Packet *packet = NULL;
+Packet *unpack_json(char *packed) {
+    Packet *packet = malloc(sizeof(Packet));
+    packet->flags = malloc(sizeof(PacketFlags));
+    return packet;
+}
+
+char *pack_binary(Packet *packet) {
+    char *packed = NULL;
+    return packed;
+}
+
+Packet *unpack_binary(char *packed) {
+    Packet *packet = malloc(sizeof(Packet));
+    packet->flags = malloc(sizeof(PacketFlags));
     return packet;
 }
 

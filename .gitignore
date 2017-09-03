@@ -2,3 +2,4 @@ backup
 cmake-build*
 .DS_store
 .idea
+./test

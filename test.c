@@ -3,7 +3,6 @@
 #include "framework/configuration.h"
 #include "framework/tcpclient.h"
 #include "framework/udpclient.h"
-#include "framework/configuration.h"
 #include "framework/serviceagent.h"
 #include "framework/packet.h"
 #include <stdlib.h>
