@@ -77,7 +77,7 @@ void udp_send_message(void * receive_buffer, struct sockaddr_in serverAddress) {
     udp_write_message(receive_buffer, socket_resource, serverAddress);
     udp_read_response(receive_buffer, socket_resource, serverAddress);
 
-    printf("Server response a: %s\n", receive_buffer);
+    printf("Server response a: %s\n", (char *)receive_buffer);
     close(socket_resource);
 }
 
