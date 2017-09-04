@@ -12,45 +12,43 @@
 #include <unistd.h>
 
 void testPacket() {
-    Packet *packet = malloc(sizeof(Packet));
-    packet->flags = malloc(sizeof(PacketFlags));
+    Packet packet;
+    packet.flags.action = 1;
+    packet.flags.config = 1;
+    packet.flags.flow = 0;
+    packet.flags.init = 0;
+    packet.flags.respond = 0;
+    packet.flags.target = 0;
+    packet.flags.type = 0;
+    packet.flags.window = 0;
 
-    packet->flags->action = 1;
-    packet->flags->config = 1;
-    packet->flags->flow = 0;
-    packet->flags->init = 0;
-    packet->flags->respond = 0;
-    packet->flags->target = 0;
-    packet->flags->type = 0;
-    packet->flags->window = 0;
+    packet.id = 1;
+    packet.data_window_start = 1000;
+    packet.data_window_stop = 1001;
+    packet.request_address = "127.0.0.1";
+    packet.response_address = "127.0.0.1";
+    packet.payload = "Bravo Marko, care! :D";
 
-    packet->id = 1;
-    packet->data_window_start = 1000;
-    packet->data_window_stop = 1001;
-    packet->request_address = "127.0.0.1";
-    packet->response_address = "127.0.0.1";
-    packet->payload = "Bravo Marko, care! :D";
-
-    int response = packet_verify(packet);
+    int response = packet_verify(&packet);
     sleep(1);
 
     if (response > 0) {
-        printf("Packet tested successfully (%lu, %lu)\n", sizeof(packet), sizeof(packet->flags));
+        printf("Packet tested successfully (%lu)\n", sizeof(Packet));
     } else {
         printf("Supplied packet isn't valid DNA format\n");
     }
 }
 
 void testConfigs() {
-    Request *request = malloc(sizeof(Request));
-    Response *response = malloc(sizeof(Response));
-    ConfigurationConsumer *config_consumer = malloc(sizeof(ConfigurationConsumer));
-    ConfigurationProducer *config_producer = malloc(sizeof(ConfigurationProducer));
-    ConfigurationServiceAgent *config_serviceAgent = malloc(sizeof(ConfigurationServiceAgent));
-    ConfigurationQualityOfService *config_qualityOfService = malloc(sizeof(ConfigurationQualityOfService));
+    Request request;
+    Response response;
+    ConfigurationConsumer config_consumer;
+    ConfigurationProducer config_producer;
+    ConfigurationServiceAgent config_serviceAgent;
+    ConfigurationQualityOfService config_qualityOfService;
 
-    request_init(request);
-    response_init(response);
+    request_init(&request);
+    response_init(&response);
 
     char *consumerHost = "127.0.0.1";
     char *producerHost = "127.0.0.1";
@@ -60,25 +58,25 @@ void testConfigs() {
     int qosPort = 9877;
 //    char *producerEndpoint = "/histogram";
 
-    config_producer->host = producerHost;
-    config_producer->port = producerPort;
-    config_consumer->host = consumerHost;
-    config_consumer->port = consumerPort;
+    config_producer.host = producerHost;
+    config_producer.port = producerPort;
+    config_consumer.host = consumerHost;
+    config_consumer.port = consumerPort;
 
-    config_serviceAgent->consumerHost = consumerHost;
-    config_serviceAgent->consumerPort = consumerPort;
-    config_serviceAgent->producerHost = producerHost;
-    config_serviceAgent->producerPort = producerPort;
+    config_serviceAgent.consumerHost = consumerHost;
+    config_serviceAgent.consumerPort = consumerPort;
+    config_serviceAgent.producerHost = producerHost;
+    config_serviceAgent.producerPort = producerPort;
 
-    config_qualityOfService->host = qosHost;
-    config_qualityOfService->port = qosPort;
+    config_qualityOfService.host = qosHost;
+    config_qualityOfService.port = qosPort;
 
-    printf("Quality of service host: %s\n", config_qualityOfService->host);
-    printf("Consumer host: %s\n", config_consumer->host);
-    printf("Producer host: %s\n", config_producer->host);
-    printf("Quality of service port: %d\n", config_qualityOfService->port);
-    printf("Consumer port: %d\n", config_consumer->port);
-    printf("Producer port: %d\n", config_producer->port);
+    printf("Quality of service host: %s\n", config_qualityOfService.host);
+    printf("Consumer host: %s\n", config_consumer.host);
+    printf("Producer host: %s\n", config_producer.host);
+    printf("Quality of service port: %d\n", config_qualityOfService.port);
+    printf("Consumer port: %d\n", config_consumer.port);
+    printf("Producer port: %d\n", config_producer.port);
 }
 
 void testClients() {
@@ -86,7 +84,7 @@ void testClients() {
     int target_message_count = 500;
     int target_thread_count = 1;
     int thread_count = 6;
-    Task *task[thread_count];
+    Task task[thread_count];
     char *testHost[] = {"127.0.0.1", "127.0.0.1", "127.0.0.1", "127.0.0.1", "127.0.0.1", "127.0.0.1"};
     // first three are TCP clients
     // second three are UDP clients
@@ -95,12 +93,11 @@ void testClients() {
 
     // creating and initializing tasks
     for (int i = 0; i < 6; i++) {
-        task[i] = malloc(sizeof(Task));
-        task[i]->host = testHost[i];
-        task[i]->port = testPort[i];
-        task[i]->message = message;
-        task[i]->repeat_count = target_message_count;
-        task[i]->thread_count = target_thread_count;
+        task[i].host = testHost[i];
+        task[i].port = testPort[i];
+        task[i].message = message;
+        task[i].repeat_count = target_message_count;
+        task[i].thread_count = target_thread_count;
     }
 
     // dispatching threads for individual tcp/udp clients
@@ -123,22 +120,18 @@ void testClients() {
         }
 
     }
-
-    for (int i = 0; i < 6; i++) {
-        free(task[i]);
-    }
 }
 
 void testDevice() {
     char* path = "storage/example.conf";
     char* mode = "r";
-    Device *device = malloc(sizeof(*device));
+    Device device;
     int result;
 
-    result = ServiceAgentDeviceConfiguration(path, mode, device);
+    result = ServiceAgentDeviceConfiguration(path, mode, &device);
 
     if (result) {
-        printf("Host: %s, port: %d\n\n", device->host, device->port);
+        printf("Host: %s, port: %d\n\n", device.host, device.port);
     } else {
         printf("Error reading device configuration\n");
     }
