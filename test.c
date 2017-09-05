@@ -129,6 +129,11 @@ void testDevice() {
     int result;
 
     result = ServiceAgentDeviceConfiguration(path, mode, &device);
+    if (1 == result) {
+        printf("=== Correctly parsed configuration ===\n");
+    } else {
+        printf("=== Error parsing configuration ===\n");
+    }
 
     if (result) {
         printf("Host: %s, port: %d\n\n", device.host, device.port);

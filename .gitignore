@@ -2,4 +2,12 @@ backup
 cmake-build*
 .DS_store
 .idea
-./test
+test
+tcps
+tcpserver
+tcpc
+tcpclient
+udps
+udpserver
+udpc
+udpclient
