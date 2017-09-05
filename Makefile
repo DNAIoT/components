@@ -1,3 +1,6 @@
+# force gcc compiler, may file, uncomment following 2 lines:
+# TCC=gcc
+# BCC=gcc
 CC=gcc
 CFLAGS = -Wall
 LDFLAGS = -pthread
@@ -22,4 +25,6 @@ HEADERS = \
     framework/serviceagent.h \
     framework/packet.h
 
+# removed headers for now to prevent multiple output files error
+# test: $(SOURCES) $(HEADERS)
 test: $(SOURCES)
