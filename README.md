@@ -4,8 +4,8 @@ DNA framework components.
 ## compile example tests
 - make sure you are you have gcc installed on your system,
 - go to the project directory and issue:
-
-gcc -Wall test.c framework/configuration.c framework/request.c framework/response.c framework/tcpclient.c framework/udpclient.c framework/serviceagent.c -o test
+    - gcc -Wall test.c framework/configuration.c framework/request.c framework/response.c framework/tcpclient.c framework/udpclient.c framework/serviceagent.c -o test
+    - alternatively: make (gcc is hard-coded compiler choice for now)
 
 - execute tests by running:
 
