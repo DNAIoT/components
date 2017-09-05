@@ -2,6 +2,7 @@ backup
 cmake-build*
 .DS_store
 .idea
+*.o
 test
 tcps
 tcpserver
