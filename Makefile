@@ -1,4 +1,4 @@
-# force gcc compiler, may fail, uncomment following 2 lines:
+# forced gcc compiler, may fail, uncomment following 2 lines:
 # TCC=gcc
 # BCC=gcc
 CC=gcc
