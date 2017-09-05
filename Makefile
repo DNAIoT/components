@@ -1,15 +1,16 @@
+CC=gcc
 CFLAGS = -Wall
 LDFLAGS = -pthread
 
 SOURCES = \
-  framework/configuration.c \
+    framework/configuration.c \
 	framework/request.c \
 	framework/response.c \
 	framework/tcpclient.c \
 	framework/udpclient.c \
 	framework/serviceagent.c \
-  framework/packet.c \
-  test.c
+    framework/packet.c \
+    test.c
 
 HEADERS = \
 	framework/request.h \
@@ -21,4 +22,4 @@ HEADERS = \
 	framework/serviceagent.h \
 	framework/packet.h
 
-test: $(SOURCES) $(HEADERS)
+test: $(SOURCES)
