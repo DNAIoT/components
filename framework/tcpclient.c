@@ -86,7 +86,7 @@ void tcp_send_message(void * receive_buffer, struct sockaddr_in serverAddress) {
     tcp_write_message(receive_buffer, socket_resource);
     tcp_read_response(receive_buffer, socket_resource);
 
-    printf("Server response a: %s\n", receive_buffer);
+    printf("Server response a: %s\n", (char *)receive_buffer);
     close(socket_resource);
 }
 

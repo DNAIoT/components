@@ -1,3 +1,7 @@
+# forced gcc compiler, may fail, uncomment following 2 lines:
+# TCC=gcc
+# BCC=gcc
+CC=gcc
 CFLAGS = -Wall
 LDFLAGS = -pthread
 
@@ -21,7 +25,7 @@ TEST_HEADERS = \
   framework/serviceagent.h \
   framework/packet.h
 
-test: $(TEST_SOURCES) $(TEST_HEADERS)
+test: $(TEST_SOURCES)
 
 tcpserver: framework/tcpserver.o
 	$(CC) -o tcpserver framework/tcpserver.o $(CFLAGS) $(LDFLAGS)

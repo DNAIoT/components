@@ -35,7 +35,7 @@ struct Packet {
     // 2 byte int
     int id;
     // flags struct
-    PacketFlags *flags;
+    PacketFlags flags;
     // 6 bytes : ip/port
     char *request_address;
     // 6 bytes : ip/port
@@ -50,12 +50,15 @@ struct Packet {
 };
 
 char *pack(Packet *packet);
-Packet *unpack(char *packed);
-int packet_verify(Packet *packet);
-int packet_verify_id(Packet *packet);
-int packet_verify_flags(Packet *packet);
-int packet_verify_request_address(Packet *packet);
-int packet_verify_response_address(Packet *packet);
-int packet_verify_data_window_start(Packet *packet, int now);
-int packet_verify_data_window_stop(Packet *packet, int now);
-int packet_verify_data_window_causal(Packet *packet);
+// Unpack JSON string into destPacket
+int unpack_json(char *packed, Packet *destPacket);
+int unpack_binary(char *packed, Packet *destPacket);
+
+int packet_verify(const Packet *packet);
+int packet_verify_id(const Packet *packet);
+int packet_verify_flags(const Packet *packet);
+int packet_verify_request_address(const Packet *packet);
+int packet_verify_response_address(const Packet *packet);
+int packet_verify_data_window_start(const Packet *packet, int now);
+int packet_verify_data_window_stop(const Packet *packet, int now);
+int packet_verify_data_window_causal(const Packet *packet);
