@@ -25,6 +25,7 @@ TEST_HEADERS = \
   framework/serviceagent.h \
   framework/packet.h
 
+# @TODO: use objects
 test: $(TEST_SOURCES)
 
 tcpserver: framework/tcpserver.o
